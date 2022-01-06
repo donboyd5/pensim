@@ -6,6 +6,22 @@ using Distributions
 # include("file1.jl")
 # include("file2.jl")
 
+# "This is a docstring.?"
+
+
+"""
+    runit(nsims, nyears)
+
+Run a simulation with `nsims` for each of `nyears`.
+
+The results from each year depend on results for the previous year.
+
+# Examples
+```julia-repl
+julia> runit(1000, 10)
+1
+```
+"""
 function runit(nsims, nyears)
     nsims = convert(Int64, nsims)
     irmean = .08

@@ -1,7 +1,14 @@
 # Pension simulation
 # Don Boyd
-# Jan 5, 2022  -- prior was 2/11/2014
+# 2022-01-06  -- prior was 2/11/2014
 
+# %% conclusions about speed and methods
+# full loops within a function is fastest
+# vectorized outside a function slower but also fast
+# vectorized within a function considerably slower but still fast
+# loops outside a function very slow
+
+# %% imports
 using DataFrames
 using Distributions
 using BenchmarkTools
@@ -12,11 +19,7 @@ using CSV
 include("pensim_functions.jl")
 import .pensimFunctions as psf
 
-# %% conclusions
-# full loops within a function is fastest
-# vectorized outside a function slower but also fast
-# vectorized within a function considerably slower but still fast
-# loops outside a function very slow
+
 
 # %% set up problem for loops
 # nsims = 1e5
