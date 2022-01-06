@@ -9,6 +9,9 @@ using Statistics
 using Printf
 using CSV
 
+include("pensim_functions.jl")
+import .pensimFunctions as psf
+
 # %% conclusions
 # full loops within a function is fastest
 # vectorized outside a function slower but also fast
@@ -129,6 +132,9 @@ function runit(nsims, nyears)
 end
 
 a, b = runit(10, 20)
+
+a, b = psf.runit(10, 20)
+
 typeof(a)
 typeof(b)
 a
