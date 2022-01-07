@@ -27,12 +27,12 @@ nyears = 100
 include("jl/test_params.jl")
 
 # %% checks
-a, b = psf.runit(10, 20)
-typeof(a)
-check =  runit(10, 20)
-typeof(check)
-check[1]
-check[2]
+# a, b = psf.runit(10, 20)
+# typeof(a)
+# check =  runit(10, 20)
+# typeof(check)
+# check[1]
+# check[2]
 
 # %% benchmark tests
 # for loop
@@ -44,13 +44,16 @@ check[2]
 @benchmark c, d = psf.runitv(nsims, nyears) setup=(nsims=nsims, nyears=nyears)
 
 # %% examine results
-quantile(d[1:nsims, nyears])
-quantile(assetseoy[1:nsims, nyears]) # summary stats, final year
+p = (0., .1, .25, .5, .75, .9, 1)
+# typeof(p)
+quantile(b[1:nsims, nyears], p)
+quantile(assetseoy[1:nsims, nyears], p) # summary stats, final year
 
 finalyear = assetseoy[1:nsims, nyears]
 median(finalyear)
 mean(finalyear)
 std(finalyear)
+quantile(finalyear, p)
 
 
 
