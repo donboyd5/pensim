@@ -18,7 +18,7 @@ The results from each year depend on results for the previous year.
 
 # Examples
 ```julia-repl
-julia> runit(1000, 10)
+julia> runit(10000, 10)
 1
 ```
 """
@@ -35,6 +35,7 @@ function runit(nsims, nyears)
     assets0 = 100
 
     ir = rand(Normal(irmean, irsd), nsims, nyears)
+
     assetsboy = Array{Float64, 2}(undef, nsims, nyears)  # uninitialized
     assetseoy = similar(assetsboy)
     ii = similar(assetsboy)
