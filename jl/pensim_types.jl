@@ -1,6 +1,7 @@
 module pensimTypes
 
 using Parameters
+export PenParams
 
 @with_kw mutable struct PenParams
     # Parameters package and macro @with_kw allow keywords and default values

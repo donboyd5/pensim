@@ -28,8 +28,6 @@ nsims = convert(Int64, 1e5)
 nyears = 100
 include("jl/test_params.jl")
 
-
-
 params = PenParams(irmean=.09)
 params
 params.nsims = 10000

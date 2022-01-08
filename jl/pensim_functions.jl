@@ -9,7 +9,6 @@ using Distributions
 # "This is a docstring.?"
 
 
-
 """
     runit(nsims, nyears, p)
 
