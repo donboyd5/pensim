@@ -23,17 +23,6 @@ julia> runit(10000, 10, p)
 ```
 """
 function runit(nsims, nyears, p)
-    nsims = convert(Int64, nsims)
-    irmean = .08
-    irsd = .12
-    ipay = .05
-    paygrow = .03
-    iben = .04
-    bengrow = .08
-    icontrib = .05
-    contribgrow = .01
-    assets0 = 100
-
     ir = rand(Normal(p.irmean, p.irsd), p.nsims, p.nyears)
 
     assetsboy = Array{Float64, 2}(undef, p.nsims, p.nyears)  # uninitialized

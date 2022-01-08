@@ -16,7 +16,7 @@ using Distributions
 # using Printf
 using Statistics
 
-# now load local modules
+# %% load local modules
 include("jl/pensim_functions.jl")
 import .pensimFunctions as psf
 
@@ -31,6 +31,7 @@ include("jl/test_params.jl")
 params = PenParams(irmean=.09)
 params
 params.nsims = 10000
+params.nsims = convert(Int64,1e7)
 params.nyears = 50
 params
 
