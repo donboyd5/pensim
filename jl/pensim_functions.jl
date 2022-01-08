@@ -9,8 +9,66 @@ using Distributions
 # "This is a docstring.?"
 
 
+
 """
-    runit(nsims, nyears)
+    runit(nsims, nyears, p)
+
+Run a simulation with `nsims` for each of `nyears`, using paramaters `p``.
+
+The results from each year depend on results for the previous year.
+
+# Examples
+```julia-repl
+julia> runit(10000, 10, p)
+1
+```
+"""
+function runit(nsims, nyears, p)
+    nsims = convert(Int64, nsims)
+    irmean = .08
+    irsd = .12
+    ipay = .05
+    paygrow = .03
+    iben = .04
+    bengrow = .08
+    icontrib = .05
+    contribgrow = .01
+    assets0 = 100
+
+    ir = rand(Normal(p.irmean, p.irsd), p.nsims, p.nyears)
+
+    assetsboy = Array{Float64, 2}(undef, p.nsims, p.nyears)  # uninitialized
+    assetseoy = similar(assetsboy)
+    ii = similar(assetsboy)
+
+    payroll = Vector{Float64}(undef, p.nyears)
+    payroll[1] = p.ipay * p.assets0
+    for y = 2:p.nyears payroll[y] = payroll[y-1] * (1 + p.paygrow) end
+
+    benefits = similar(payroll)
+    benefits[1] = p.iben * p.assets0
+    for y= 2:p.nyears benefits[y] = benefits[y-1] * (1 + p.bengrow) end
+
+    contrib = similar(payroll)
+    contrib[1] = p.icontrib * p.assets0
+    for y = 2:p.nyears contrib[y] = contrib[y-1] * (1 + p.contribgrow) end
+
+    # main loop
+    for i = 1:p.nsims # sims
+      #if mod(i,2000)==0 println(i) end
+      assetsboy[i,1] = p.assets0
+      assetseoy[i,1] = assetsboy[i,1] * (1 + ir[i,1])
+        for y = 2:p.nyears # years
+          assetsboy[i,y] = assetseoy[i,y-1]
+          ii[i, y] = (assetsboy[i, y] + (contrib[y] - benefits[y])/2) * ir[i, y]
+          assetseoy[i,y] = assetsboy[i, y] + ii[i, y]
+          end
+      end
+      return assetsboy, assetseoy
+  end
+
+"""
+    runit_old(nsims, nyears)
 
 Run a simulation with `nsims` for each of `nyears`.
 
@@ -18,11 +76,11 @@ The results from each year depend on results for the previous year.
 
 # Examples
 ```julia-repl
-julia> runit(10000, 10)
+julia> runit_old(10000, 10)
 1
 ```
 """
-function runit(nsims, nyears)
+function runit_old(nsims, nyears)
     nsims = convert(Int64, nsims)
     irmean = .08
     irsd = .12
